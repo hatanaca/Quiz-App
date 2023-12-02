@@ -18,7 +18,7 @@ const questions = [
         ]
     },
     {
-        question: "Which is larget animal in the world ?",
+        question: "Which is the largest desert in the world ?",
         answers: [
             { text: "Kalahari", correct: true},
             { text: "Gobi", correct: false},
