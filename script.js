@@ -27,16 +27,17 @@ const questions = [
         ]
     },
 ];
-// Criando uma const onde ira receber um array, com um objeto em cada índice, com duas propriedades
-// sendo uma propriedade a pergunta, outra propriedade um array novamente contendo as repostas junto aos valores booleanos
+// Criado um array com um objeto em cada índice, onde tera duas propriedades, a pergunta e um array representando as respostas
+// dentro do array terá duas propriedades: uma resposta e um valor booleano representando verdadeiro ou falso
 
 const questionElement = document.getElementById("question");
 const answerButton = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
-// Pegando os elementos do html para manipula-los
+// Selecionando os elementos do arquivo html
 
 let currentQuestionIndex = 0;
 let score = 0;
+// Flag variaveis
 
 function startQuiz(){
     currentQuestionIndex = 0;
@@ -50,12 +51,13 @@ function showQuestion(){
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
     let questionNo = currentQuestionIndex + 1;
-    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
-// question é um array com objetos, currentQuestion recebe o objeto de acordo com o indice
-// como o comelo é o indice 0 para representar o nº vai ser somado com 1
-// questionElement ira alterar o html adicionando o numero e o string da pergunta
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question; 
+// question é um array com objetos em cada índice, currentQuestion recebe o objeto de acordo com o indice
+// questionNo ira receber o indice do array + 1;
+// questionElement ira alterar o html adicionando o questionNo que será o número
+// e currentQuestion.question que é a propriedade(pergunta) do objeto atual;
 
-    currentQuestion.answers.forEach(answer => {
+currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
         button.classList.add("btn");
@@ -66,8 +68,12 @@ function showQuestion(){
         button.addEventListener("click", selectAnswer);
     });
 }
-// currentQuestion possui o objeto "question" acessamos a propriedade answers que contem um array de objetos
-// e chamamos um loop para cada elemento com o forEach
+// Função que ira criar no html as respostas, onde iremos acessar .answers que é um array
+// Onde iremos percorrer os elementos com o forEach, criando então um button até percorrer todo o array.
+// O If verificar se a propriedade é "true"
+// Então adicionamos a propriedade correct ao objeto dataset
+// dataset: É um objeto associado a elementos HTML que permite acessar e armazenar atributos de dados personalizados.
+// Por fim adicionamos um EventListener para chamar a função para lidar com a resposta selecionada
 startQuiz()
 
 function resetState(){
@@ -78,7 +84,9 @@ function resetState(){
 }
 function selectAnswer(e){
     const selectedBtn = e.target;
+    // Seleciona o elemento no qual o evento ocorreu no caso o button
     const isCorrect = selectedBtn.dataset.correct === "true";
+    // Resposta escolhida pelo usuario
     if(isCorrect){
         selectedBtn.classList.add("correct");
         score++;
@@ -86,13 +94,18 @@ function selectAnswer(e){
         selectedBtn.classList.add("incorrect");
     }
     Array.from(answerButton.children).forEach(button => {
+        // Array.from obejto Array usando um método para transformar os elementos de answerButton em array para usar o forEach
         if(button.dataset.correct === "true"){
             button.classList.add("correct");
+        // Muda a classe do botao se for o elemento correto
         }
         button.disabled = true;
+        // impede que o usuario clique em outros elementos
     });
     nextButton.style.display = "block"
+    // Mostra o botão next
 }
+// 
 
 function showScore(){
     resetState();
@@ -108,6 +121,7 @@ function handleNextButton(){
     }else{
         showScore();
     }
+// Após realizar todo o questionario ira chamar a função de encerramento
 }
 
 nextButton.addEventListener("click", () =>{
